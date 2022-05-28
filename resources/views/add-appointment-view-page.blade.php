@@ -51,56 +51,56 @@
                                     <input type="checkbox" id="monday" name="monday" value="1">
                                     <label>Monday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="m_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="m_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="m_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="m_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="tuesday" name="tuesday" value="2">
                                     <label>Tuesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="t_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="t_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="t_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="t_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="wednesday" name="wednesday" value="3">
                                     <label>Wednesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="w_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="w_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="w_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="w_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="thursday" name="thursday" value="4">
                                     <label>Thursday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="th_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="th_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="th_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="th_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="friday" name="friday" value="5">
                                     <label>Friday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="f_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="f_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="f_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="f_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="saturday" name="saturday" value="6">
                                     <label>Saturday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="s_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="s_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="s_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="s_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="sunday" name="sunday" value="7">
                                     <label>Sunday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="su_start_time" readonly></td>
-                                <td><input type="text" class="end_time" name="su_end_time" readonly></td>
+                                <td><input type="text" class="start_time" name="su_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="end_time" name="su_end_time" placeholder="End Time" readonly></td>
                             </tr>
                         </tbody>
                     </table>
@@ -119,15 +119,9 @@
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
-        // $('#timepicker').click(function (){
-        //     alert('hai');
-        // });
-
+        
         $('.start_time').timepicker({ timeFormat: 'H:mm:ss' });
         $('.end_time').timepicker({ timeFormat: 'H:mm:ss' });
 
     });
 </script>
-
-

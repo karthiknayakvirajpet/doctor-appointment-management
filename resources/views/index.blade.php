@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-4">
                     <a href="/add-appointment-view">
-                        <button type="button" class="btn btn-info float-right">Add Appointment Time</button>
+                        <button type="button" class="btn btn-primary float-right">Add Appointment Time</button>
                     </a>
                 </div>
             </div>
@@ -38,8 +38,14 @@
                         <td>{{ $r->name }}</td>
                         <td>{{ $r->address }}</td>
                         <td>
-                            <i class="fa fa-pencil" aria-hidden="true" title="Edit Availability Time"></i>
-                            <i class="fa fa-trash" aria-hidden="true" title="Delete"></i>
+                            <button type="button" rel="tooltip" class="btn btn-info" data-original-title="" title="Edit Availability Time" name="edit" value="{{ $r->id }}">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+
+                            <button type="button" rel="tooltip" class="btn btn-danger" data-original-title="" title="Delete" name="delete" value="{{ $r->id }}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+
                         </td>
                     </tr>
                     @endforeach
@@ -50,4 +56,35 @@
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
 
+        $('[name=delete]').click(function (){
+            var value = $(this).val();
+            
+            swal("Are you sure you want to delete?", {
+              dangerMode: true,
+              buttons: true,
+            }).then((Delete) => 
+            {
+                if (Delete)
+                {
+                    $.ajax({
+                          url: "/delete-doctor/" + value,
+                          type: 'GET',
+                          success: function(){
+                              swal({
+                                title: "Deleted successfully!",
+                              }).then(function(){ 
+                                  location.reload();
+                                 }
+                              );
+                          }
+                    });
+                }    
+            }).catch(swal.noop);
+        });
+
+    });
+</script>

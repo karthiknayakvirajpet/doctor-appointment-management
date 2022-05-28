@@ -80,5 +80,14 @@ class DoctorAppointmentController extends Controller
         return redirect('/index')->with('message', 'Details added successfully');
     }
 
+    #*****************************************************************************
+    #Delete Doctor
+    #*****************************************************************************
+    public function deleteDoctor($id)
+    {
+        $result = Doctor::where('id', $id)->update(['active' => 0]);
+        return redirect('/index');
+    }
+
     
 }
