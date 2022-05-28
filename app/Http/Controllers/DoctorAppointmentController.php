@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use App\Models\Doctor;
+use DB;
 
 class DoctorAppointmentController extends Controller
 {
@@ -13,7 +16,8 @@ class DoctorAppointmentController extends Controller
      */
     public function index()
     {
-        //
+        $result = Doctor::get()->where('active', 1);
+        return view('index')->with(array('result'=>$result));
     }
 
     /**
