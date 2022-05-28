@@ -2,7 +2,6 @@
 
 <div class="container p-4">
     <h2><center>Doctor Appointment Management</center></h2>
-
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -10,7 +9,9 @@
                     <h4>Doctors List</h4>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-info float-right">Add Appointment Time</button>
+                    <a href="/add-appointment-view">
+                        <button type="button" class="btn btn-info float-right">Add Appointment Time</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -38,7 +39,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 
