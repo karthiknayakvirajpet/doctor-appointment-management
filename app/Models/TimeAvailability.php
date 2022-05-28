@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TimeAvailability extends Model
 {
     use HasFactory;
+    protected $table = 'time_availability';
 }

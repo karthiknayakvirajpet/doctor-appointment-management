@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+// Route::controller(App\Http\Controllers\DoctorAppointmentController::class)->group(function () 
+// {
+
+//     //Get Doctor Availability Details
+//     Route::get('get-doctor-availability/{doctor_id}', 'getDoctorAvailability');
+
+// });

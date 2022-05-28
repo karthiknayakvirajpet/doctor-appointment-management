@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Doctor;
+use App\Models\TimeAvailability;
 use DB;
 use Session;
+use Response;
 
 class DoctorAppointmentController extends Controller
 {
@@ -62,22 +64,31 @@ class DoctorAppointmentController extends Controller
         ];
 
         $created = date("Y-m-d H:i:s");
-        foreach ($datas as $data)
-        {
-            $insert_params = array(
-                'doctor_id' => $data['doctor_id'],
-                'day' => $data['day'],
-                'open_status' => ($data['end_time'] == '00:00:00' ? 0 : 1),
-                'start_time' => $data['start_time'],
-                'end_time' => $data['end_time'],
-                'created_at' => $created,
-                'updated_at' => $created
-            );
 
-            DB::table('time_availability')->insert($insert_params);
+        DB::beginTransaction();
+        try
+        {
+            foreach ($datas as $data)
+            {
+                $insert_params = array(
+                    'doctor_id' => $data['doctor_id'],
+                    'day' => $data['day'],
+                    'open_status' => ($data['end_time'] == '00:00:00' ? 0 : 1),
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
+                    'created_at' => $created,
+                    'updated_at' => $created
+                );
+                DB::table('time_availability')->insert($insert_params);                
+            }
+            DB::commit();
+            return redirect('/index')->with('message', 'Details added successfully');
         }
-        
-        return redirect('/index')->with('message', 'Details added successfully');
+        catch (\Exception $e) 
+        {
+            DB::rollback();
+            return redirect('add-appointment-view')->with('message', 'Failed to add details');
+        }
     }
 
     #*****************************************************************************
@@ -87,6 +98,16 @@ class DoctorAppointmentController extends Controller
     {
         $result = Doctor::where('id', $id)->update(['active' => 0]);
         return redirect('/index');
+    }
+
+
+    #*****************************************************************************
+    #Get Doctor Availability Details
+    #*****************************************************************************
+    public function getDoctorAvailability($doctor_id)
+    {
+        $result = TimeAvailability::get()->where('doctor_id', $doctor_id);
+        return Response::json(array('success' => true, 'data' => $result)); 
     }
 
     

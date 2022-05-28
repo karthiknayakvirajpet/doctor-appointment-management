@@ -33,4 +33,7 @@ Route::controller(App\Http\Controllers\DoctorAppointmentController::class)->grou
     //Delete Doctor
     Route::get('delete-doctor/{id}', 'deleteDoctor');
 
+    //Get Doctor Availability Details
+    Route::get('get-doctor-availability/{doctor_id}', 'getDoctorAvailability');
+
 });

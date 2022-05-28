@@ -35,7 +35,7 @@
                 <tbody>
                     @foreach($result as $r)
                     <tr>
-                        <td>{{ $r->name }}</td>
+                        <td data-toggle="modal" data-target="#addConference"><a href="#" onclick="theFunction({{$r->id}});"><u>{{ $r->name }}</u></a></td>
                         <td>{{ $r->address }}</td>
                         <td>
                             <button type="button" rel="tooltip" class="btn btn-info" data-original-title="" title="Edit Availability Time" name="edit" value="{{ $r->id }}">
@@ -45,7 +45,6 @@
                             <button type="button" rel="tooltip" class="btn btn-danger" data-original-title="" title="Delete" name="delete" value="{{ $r->id }}">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
-
                         </td>
                     </tr>
                     @endforeach
@@ -56,10 +55,62 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="addConference" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Appointment Time Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                    </tr>
+                    </thead>
+                    <tbody id="doctor_details">
+                        <!-- Appending from JQuery -->
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
 
+    //************************************************
+    //Get Doctor Availability Details
+    //************************************************
+    function theFunction(doctor_id){
+
+        $.ajax({
+            url: "/get-doctor-availability/" + doctor_id,
+            type: 'GET',
+            success: function(result){
+                $('#doctor_details').html('');
+                $.each(result.data, function( key, value ) 
+                {
+                    var data = '<tr><td>'+value.id+'</td></tr>';
+                    $('#doctor_details').append(data);
+                });                  
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        //************************************************
+        //Delete Doctor Record
+        //************************************************
         $('[name=delete]').click(function (){
             var value = $(this).val();
             
@@ -85,6 +136,5 @@
                 }    
             }).catch(swal.noop);
         });
-
     });
 </script>
