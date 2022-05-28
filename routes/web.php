@@ -27,4 +27,7 @@ Route::controller(App\Http\Controllers\DoctorAppointmentController::class)->grou
     //Add Appointment View Page
     Route::get('add-appointment-view', 'addAppointmentView');
 
+    //Create Appointment
+    Route::post('create-appointment', 'createAppointment');
+
 });

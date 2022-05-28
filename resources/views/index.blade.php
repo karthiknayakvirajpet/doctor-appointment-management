@@ -1,5 +1,13 @@
 @extends('base')
 
+@if (\Session::has('message'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('message') !!}</li>
+        </ul>
+    </div>
+@endif
+
 <div class="container p-4">
     <h2><center>Doctor Appointment Management</center></h2>
     <div class="card">
