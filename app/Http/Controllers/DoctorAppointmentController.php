@@ -63,7 +63,8 @@ class DoctorAppointmentController extends Controller
     #*****************************************************************************
     public function addAppointmentView()
     {
-        $result = Doctor::get()->where('active', 1);
+        $result = DB::select('select * from doctors where active=1 and id not in(select doctor_id from time_availability)');
+
         return view('add-appointment-view-page')->with(array('result'=>$result));
     }
 
@@ -107,16 +108,34 @@ class DoctorAppointmentController extends Controller
         {
             foreach ($datas as $data)
             {
-                $insert_params = array(
-                    'doctor_id' => $data['doctor_id'],
-                    'day' => $data['day'],
-                    'open_status' => ($data['end_time'] == '00:00:00' ? 0 : 1),
-                    'start_time' => $data['start_time'],
-                    'end_time' => $data['end_time'],
-                    'created_at' => $created,
-                    'updated_at' => $created
-                );
-                DB::table('time_availability')->insert($insert_params);                
+                $exists = DB::table('time_availability')
+                                ->where('doctor_id', $request->doctor_id)
+                                ->where('day', $data['day'])
+                                ->first();
+
+                if($exists) //If Data exists - UPDATE
+                {
+                    $update_params = array(
+                            'open_status' => ($data['end_time'] == '00:00:00' ? 0 : 1),
+                            'start_time' => $data['start_time'],
+                            'end_time' => $data['end_time'],
+                            'updated_at' => $created
+                        );
+                    DB::table('time_availability')->where('id', $exists->id)->update($update_params); 
+                }
+                else //If Data not exists - INSERT
+                {
+                    $insert_params = array(
+                            'doctor_id' => $data['doctor_id'],
+                            'day' => $data['day'],
+                            'open_status' => ($data['end_time'] == '00:00:00' ? 0 : 1),
+                            'start_time' => $data['start_time'],
+                            'end_time' => $data['end_time'],
+                            'created_at' => $created,
+                            'updated_at' => $created
+                        );
+                    DB::table('time_availability')->insert($insert_params); 
+                }              
             }
             DB::commit();
             return redirect('/index')->with('message', 'Details added successfully');
@@ -172,6 +191,21 @@ class DoctorAppointmentController extends Controller
             $result[$key]['open_status'] = ($r->open_status == 0 ? 'No' : 'Yes');
         }
         return Response::json(array('success' => true, 'data' => $result)); 
+    }
+
+
+    #*****************************************************************************
+    #Edit Appointment View Page
+    #*****************************************************************************
+    public function editAppointmentView($doctor_id)
+    {
+        $result = DB::table('doctors')
+                    ->select('time_availability.*', 'doctors.name', 'doctors.id')
+                    ->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
+                    ->where('doctors.id', $doctor_id)
+                    ->get();
+
+        return view('edit-appointment-view-page')->with(array('result'=>$result));
     }
 
     

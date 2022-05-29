@@ -31,6 +31,9 @@ Route::controller(App\Http\Controllers\DoctorAppointmentController::class)->grou
     //Create Appointment
     Route::post('create-appointment', 'createAppointment');
 
+    //Edit Appointment View Page
+    Route::get('edit-appointment-view/{doctor_id}', 'editAppointmentView');
+
     //Delete Doctor
     Route::get('delete-doctor/{id}', 'deleteDoctor');
 

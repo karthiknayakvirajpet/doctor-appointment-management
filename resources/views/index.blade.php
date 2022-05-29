@@ -87,7 +87,7 @@
                         <td data-toggle="modal" data-target="#addConference"><a href="#" onclick="theFunction({{$r->id}});"><u>{{ $r->name }}</u></a></td>
                         <td>{{ $r->address }}</td>
                         <td>
-                            <button type="button" rel="tooltip" class="btn btn-info" data-original-title="" title="Edit Availability Time" name="edit" value="{{ $r->id }}">
+                            <button type="button" onclick="location.href='/edit-appointment-view/{{$r->id}}';" rel="tooltip" class="btn btn-info" data-original-title="" title="Edit Availability Time" name="edit" value="{{ $r->id }}">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
 
