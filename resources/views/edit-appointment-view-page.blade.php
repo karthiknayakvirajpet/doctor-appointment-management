@@ -11,7 +11,7 @@
 <div class="container p-4">
     <h2><center>Doctor Appointment Management</center></h2>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #079EBC;">
             <div class="row">
                 <div class="col-md-8">
                     <h4>Edit Appointment Time</h4>
@@ -21,13 +21,13 @@
 
         <form action="/create-appointment" method="POST" onsubmit="return validateForm()" name="myForm">
             @csrf
-            <div class="card-body">
+            <div class="card-body" style="background-color: #E0F8FD;">
                 <div class="col-8 offset-2">
-                    <label><h5 style="color:blue;"><b>Doctor Name: {{ @$result[0]->name }}</b></h5></label>
+                    <label><h5 style="color:brown;"><b>Doctor Name: {{ @$result[0]->name }}</b></h5></label>
 
                     <input type="hidden" name="doctor_id" value="{{ @$result[0]->id }}">
                     
-                    <div class="mt-3">
+                    <div class="mt-1">
                     <label><h6><b>Select Availability:</b></h6></label>
                     <table class="table table-borderless">
                         <thead>
@@ -43,56 +43,56 @@
                                     <input type="checkbox" id="monday" name="monday" value="1" <?php if(@$result[0]->open_status!=0)echo 'checked';?>>
                                     <label>Monday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="m_start_time" placeholder="Start Time" readonly value="<?php if(@$result[0]->open_status!=0)echo @$result[0]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="m_end_time" placeholder="End Time" readonly value="<?php if(@$result[0]->open_status!=0)echo @$result[0]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="m_start_time" placeholder="Start Time" readonly value="<?php if(@$result[0]->open_status!=0)echo @$result[0]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="m_end_time" placeholder="End Time" readonly value="<?php if(@$result[0]->open_status!=0)echo @$result[0]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="tuesday" name="tuesday" value="2" <?php if(@$result[1]->open_status!=0)echo 'checked';?>>
                                     <label>Tuesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="t_start_time" placeholder="Start Time" readonly value="<?php if(@$result[1]->open_status!=0)echo @$result[1]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="t_end_time" placeholder="End Time" readonly value="<?php if(@$result[1]->open_status!=0)echo @$result[1]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="t_start_time" placeholder="Start Time" readonly value="<?php if(@$result[1]->open_status!=0)echo @$result[1]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="t_end_time" placeholder="End Time" readonly value="<?php if(@$result[1]->open_status!=0)echo @$result[1]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="wednesday" name="wednesday" value="3" <?php if(@$result[2]->open_status!=0)echo 'checked';?>>
                                     <label>Wednesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="w_start_time" placeholder="Start Time" readonly value="<?php if(@$result[2]->open_status!=0)echo @$result[2]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="w_end_time" placeholder="End Time" readonly value="<?php if(@$result[2]->open_status!=0)echo @$result[2]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="w_start_time" placeholder="Start Time" readonly value="<?php if(@$result[2]->open_status!=0)echo @$result[2]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="w_end_time" placeholder="End Time" readonly value="<?php if(@$result[2]->open_status!=0)echo @$result[2]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="thursday" name="thursday" value="4" <?php if(@$result[3]->open_status!=0)echo 'checked';?>>
                                     <label>Thursday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="th_start_time" placeholder="Start Time" readonly value="<?php if(@$result[3]->open_status!=0)echo @$result[3]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="th_end_time" placeholder="End Time" readonly value="<?php if(@$result[3]->open_status!=0)echo @$result[3]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="th_start_time" placeholder="Start Time" readonly value="<?php if(@$result[3]->open_status!=0)echo @$result[3]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="th_end_time" placeholder="End Time" readonly value="<?php if(@$result[3]->open_status!=0)echo @$result[3]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="friday" name="friday" value="5" <?php if(@$result[4]->open_status!=0)echo 'checked';?>>
                                     <label>Friday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="f_start_time" placeholder="Start Time" readonly value="<?php if(@$result[4]->open_status!=0)echo @$result[4]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="f_end_time" placeholder="End Time" readonly value="<?php if(@$result[4]->open_status!=0)echo @$result[4]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="f_start_time" placeholder="Start Time" readonly value="<?php if(@$result[4]->open_status!=0)echo @$result[4]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="f_end_time" placeholder="End Time" readonly value="<?php if(@$result[4]->open_status!=0)echo @$result[4]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="saturday" name="saturday" value="6" <?php if(@$result[5]->open_status!=0)echo 'checked';?>>
                                     <label>Saturday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="s_start_time" placeholder="Start Time" readonly value="<?php if(@$result[5]->open_status!=0)echo @$result[5]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="s_end_time" placeholder="End Time" readonly value="<?php if(@$result[5]->open_status!=0)echo @$result[5]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="s_start_time" placeholder="Start Time" readonly value="<?php if(@$result[5]->open_status!=0)echo @$result[5]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="s_end_time" placeholder="End Time" readonly value="<?php if(@$result[5]->open_status!=0)echo @$result[5]->end_time ;?>"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="sunday" name="sunday" value="7" <?php if(@$result[6]->open_status!=0)echo 'checked';?>>
                                     <label>Sunday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="su_start_time" placeholder="Start Time" readonly value="<?php if(@$result[6]->open_status!=0)echo @$result[6]->start_time ;?>"></td>
-                                <td><input type="text" class="end_time" name="su_end_time" placeholder="End Time" readonly value="<?php if(@$result[6]->open_status!=0)echo @$result[6]->end_time ;?>"></td>
+                                <td><input type="text" class="form-control start_time" name="su_start_time" placeholder="Start Time" readonly value="<?php if(@$result[6]->open_status!=0)echo @$result[6]->start_time ;?>"></td>
+                                <td><input type="text" class="form-control end_time" name="su_end_time" placeholder="End Time" readonly value="<?php if(@$result[6]->open_status!=0)echo @$result[6]->end_time ;?>"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -101,9 +101,9 @@
                     <div id="errors" style="color:red;">
                     </div>
 
-                    <button type="submit" class="btn btn-success mt-1 mr-2">Save</button>
+                    <button type="submit" class="btn btn-success mr-2">Save</button>
                     <a href="/index">
-                        <button type="button" class="btn btn-warning mt-1">Cancel</button>
+                        <button type="button" class="btn btn-warning">Cancel</button>
                     </a>
                 </div>
             </div>

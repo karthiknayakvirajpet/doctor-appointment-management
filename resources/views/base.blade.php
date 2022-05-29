@@ -22,7 +22,7 @@
   <!-- End - Time Picker JQuery -->
 
 </head>
-<body>
+<body style="background-color: #C2C6C5;">
 
 
 

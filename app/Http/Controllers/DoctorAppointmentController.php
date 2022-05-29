@@ -55,7 +55,7 @@ class DoctorAppointmentController extends Controller
             }               
         }
         $result = $data->get();
-        return view('index')->with(array('result'=>$result, 'doctors'=>$doctors));
+        return view('index')->with(array('result'=>$result, 'doctors'=>$doctors, 'search_doctor_name' => $request->doctor_name, 'search_start_time' => $request->start_time, 'search_end_time' => $request->end_time, 'search_doctor_id' => $request->doctor_id));
     }
 
     #*****************************************************************************
@@ -206,6 +206,24 @@ class DoctorAppointmentController extends Controller
                     ->get();
 
         return view('edit-appointment-view-page')->with(array('result'=>$result));
+    }
+
+
+    #*****************************************************************************
+    #Create Doctor
+    #*****************************************************************************
+    public function createDoctor(Request $request)
+    {
+        $created = date("Y-m-d H:i:s");
+        $insert = array(
+                'name' => $request->dc_name,
+                'address' => $request->address,
+                'active' => 1,
+                'created_at' => $created,
+                'updated_at' => $created
+            );
+        DB::table('doctors')->insert($insert);
+        return redirect('/index')->with('message', 'Details added successfully');
     }
 
     

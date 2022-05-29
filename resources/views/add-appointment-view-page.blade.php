@@ -11,7 +11,7 @@
 <div class="container p-4">
     <h2><center>Doctor Appointment Management</center></h2>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #079EBC;">
             <div class="row">
                 <div class="col-md-8">
                     <h4>Add Appointment Time</h4>
@@ -21,7 +21,7 @@
 
         <form action="/create-appointment" method="POST" onsubmit="return validateForm()" name="myForm">
             @csrf
-            <div class="card-body">
+            <div class="card-body" style="background-color: #E0F8FD;">
                 <div class="col-8 offset-2">
                     <label><h6><b>Select Doctor:</b></h6></label> 
                     <select class="form-control" name="doctor_id">
@@ -53,56 +53,56 @@
                                     <input type="checkbox" id="monday" name="monday" value="1">
                                     <label>Monday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="m_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="m_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="m_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="m_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="tuesday" name="tuesday" value="2">
                                     <label>Tuesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="t_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="t_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="t_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="t_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="wednesday" name="wednesday" value="3">
                                     <label>Wednesday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="w_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="w_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="w_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="w_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="thursday" name="thursday" value="4">
                                     <label>Thursday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="th_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="th_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="th_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="th_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="friday" name="friday" value="5">
                                     <label>Friday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="f_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="f_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="f_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="f_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="saturday" name="saturday" value="6">
                                     <label>Saturday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="s_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="s_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="s_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="s_end_time" placeholder="End Time" readonly></td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="checkbox" id="sunday" name="sunday" value="7">
                                     <label>Sunday</label><br>
                                 </td>
-                                <td><input type="text" class="start_time" name="su_start_time" placeholder="Start Time" readonly></td>
-                                <td><input type="text" class="end_time" name="su_end_time" placeholder="End Time" readonly></td>
+                                <td><input type="text" class="form-control start_time" name="su_start_time" placeholder="Start Time" readonly></td>
+                                <td><input type="text" class="form-control end_time" name="su_end_time" placeholder="End Time" readonly></td>
                             </tr>
                         </tbody>
                     </table>

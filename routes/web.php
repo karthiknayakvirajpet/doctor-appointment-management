@@ -40,4 +40,7 @@ Route::controller(App\Http\Controllers\DoctorAppointmentController::class)->grou
     //Get Doctor Availability Details
     Route::get('get-doctor-availability/{doctor_id}', 'getDoctorAvailability');
 
+    //Create Doctor
+    Route::post('create-doctor', 'createDoctor');
+
 });

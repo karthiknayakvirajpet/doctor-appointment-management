@@ -11,19 +11,22 @@
 <div class="container p-4">
     <h2><center>Doctor Appointment Management</center></h2>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #079EBC;">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <h4>Doctors List</h4>
                 </div>
                 <div class="col-md-4">
                     <a href="/add-appointment-view">
-                        <button type="button" class="btn btn-primary float-right">Add Appointment Time</button>
+                        <button type="button" class="btn btn-warning float-right">Add Appointment Time</button>
                     </a>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addDoctor">Add Doctor</button>
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="background-color: #E0F8FD;">
 
             <form action="/index" method="POST" onsubmit="return validateForm()" name="myForm">
                 @csrf
@@ -33,13 +36,13 @@
                         <select class="form-control" name="doctor_id">
                             <option selected disabled>Select Doctor</option>
                             @foreach($doctors as $r)
-                            <option value="{{ $r->id }}">{{ $r->name }}</option>
+                            <option value="{{ $r->id }}" <?php if(@$search_doctor_id==$r->id):?>  selected <?php endif;?>>{{ $r->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" placeholder="Doctor Name" id="doctor_name" name="doctor_name">
+                        <input type="text" class="form-control" placeholder="Doctor Name" id="doctor_name" name="doctor_name" value="<?php echo @$search_doctor_name ;?>">
                     </div>
 
                     <div class="col-2">
@@ -56,15 +59,18 @@
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="start_time" placeholder="Start Time" readonly>
+                        <input type="text" class="form-control" name="start_time" placeholder="Start Time" readonly value="<?php echo @$search_start_time ;?>">
                     </div>
 
                     <div class="col-2">
-                        <input type="text" class="form-control" name="end_time" placeholder="End Time" readonly>
+                        <input type="text" class="form-control" name="end_time" placeholder="End Time" readonly value="<?php echo @$search_end_time ;?>">
                     </div>
 
                     <div class="col-1">
-                        <button type="submit" class="btn btn-success">Search</button>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" onclick="location.href='/index';" class="btn btn-info">Reset</button>
                     </div>
                 </div>
 
@@ -73,7 +79,7 @@
                 </div>
             </form>
 
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" style="background-color: #FCFCFC;">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -135,6 +141,40 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addDoctor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Add Doctor Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 <form action="/create-doctor" method="POST">
+                    @csrf
+                    <div class="col-12">
+                        Doctor Name:
+                        <input type="text" class="form-control" name="dc_name" placeholder="Doctor Name" required>
+                    </div>
+
+                    <div class="col-12">
+                        Address:
+                        <input type="text" class="form-control" name="address" placeholder="Address" required>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
