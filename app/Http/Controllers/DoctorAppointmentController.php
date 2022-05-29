@@ -23,63 +23,38 @@ class DoctorAppointmentController extends Controller
                     ->select('doctors.*')
                     ->where('doctors.active', 1);
 
-        // $data = DB::table('doctors')
-        //             ->select('doctors.*', 'time_availability.*')
-        //             ->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
-        //             ->where('doctors.active', 1)
-        //             ->groupBy('doctors.id');
-
-
-        // $data = DB::table('time_availability')
-        //             ->select('doctors.*', 'time_availability.*', 'time_availability.id')
-        //             ->join('doctors', 'time_availability.doctor_id', '=', 'doctors.id')
-        //             ->where('doctors.active', 1)
-        //             ->groupBy('time_availability.doctor_id');
-
+        //Search by Doctor ID
         if($request->doctor_id)
         {
             $data = $data->where('doctors.id', $request->doctor_id);
         }
+
+        //Search by Doctor Name
         if($request->doctor_name)
         {
             $data = $data->where('doctors.name', 'LIKE', '%'.$request->doctor_name.'%');
         }
-        // if($request->day)
-        // {
-        //     $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
-        //                  ->where('time_availability.day', $request->day)
-        //                  ->where('time_availability.open_status', 1);
-        // }
-
-        // if($request->start_time && $request->end_time)
-        // {
-        //     $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
-        //                  ->whereTime('time_availability.start_time', '>=', $request->start_time)
-        //                  ->whereTime('time_availability.end_time', '<=', $request->end_time)
-        //                  ->where('time_availability.open_status', 1);
-        // }
-
         if($request->day || $request->start_time || $request->end_time)
         {
             $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
                     ->where('time_availability.open_status', 1)
                     ->groupBy('doctors.id');
 
+            //Search by Day
             if($request->day)
             {
                 $data = $data->where('time_availability.day', $request->day);
                              
             }
+
+            //Search by Stat and End Time
             if($request->start_time && $request->end_time)
             {
                 $data = $data->whereTime('time_availability.start_time', '>=', $request->start_time)
                              ->whereTime('time_availability.end_time', '<=', $request->end_time);
-            }
-                         
+            }               
         }
-
         $result = $data->get();
-
         return view('index')->with(array('result'=>$result, 'doctors'=>$doctors));
     }
 
