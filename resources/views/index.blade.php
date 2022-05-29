@@ -24,6 +24,55 @@
             </div>
         </div>
         <div class="card-body">
+
+            <form action="/index" method="POST" onsubmit="return validateForm()" name="myForm">
+                @csrf
+
+                <div class="row">
+                    <div class="col-2">
+                        <select class="form-control" name="doctor_id">
+                            <option selected disabled>Select Doctor</option>
+                            @foreach($doctors as $r)
+                            <option value="{{ $r->id }}">{{ $r->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <input type="text" class="form-control" placeholder="Doctor Name" id="doctor_name" name="doctor_name">
+                    </div>
+
+                    <div class="col-2">
+                        <select class="form-control" name="day">
+                            <option selected disabled>Select Day</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="7">Sunday</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <input type="text" class="form-control" name="start_time" placeholder="Start Time" readonly>
+                    </div>
+
+                    <div class="col-2">
+                        <input type="text" class="form-control" name="end_time" placeholder="End Time" readonly>
+                    </div>
+
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </div>
+
+                <div class="p-2" id="errors" style="color:red;">
+                    
+                </div>
+            </form>
+
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
@@ -69,7 +118,10 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <th>Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Availability</th>
                     </tr>
                     </thead>
                     <tbody id="doctor_details">
@@ -88,6 +140,32 @@
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script type="text/javascript">
 
+
+    //************************************************
+    //Form Validation
+    //************************************************
+    function validateForm() {
+        var form = document.forms["myForm"];
+        $('#errors').html('');
+        var err = [];
+
+        if(form["start_time"].value != "" && form["end_time"].value == "" )
+        {
+            err.push("Please Select End Time<br>");
+        }
+
+        if(form["start_time"].value == "" && form["end_time"].value != "" )
+        {
+            err.push("Please Select Start Time<br>");
+        }
+
+        if (err != '')
+        {
+            $('#errors').append(err);
+            return false;
+        }
+    }
+
     //************************************************
     //Get Doctor Availability Details
     //************************************************
@@ -100,7 +178,7 @@
                 $('#doctor_details').html('');
                 $.each(result.data, function( key, value ) 
                 {
-                    var data = '<tr><td>'+value.id+'</td></tr>';
+                    var data = '<tr><td>'+value.day+'</td><td>'+value.start_time+'</td><td>'+value.end_time+'</td><td>'+value.open_status+'</td></tr>';
                     $('#doctor_details').append(data);
                 });                  
             }
@@ -108,6 +186,10 @@
     }
 
     $(document).ready(function() {
+
+        $('[name=start_time]').timepicker({ timeFormat: 'H:mm:ss' });
+        $('[name=end_time]').timepicker({ timeFormat: 'H:mm:ss' });
+
         //************************************************
         //Delete Doctor Record
         //************************************************

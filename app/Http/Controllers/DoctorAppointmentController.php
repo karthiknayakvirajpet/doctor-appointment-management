@@ -15,10 +15,72 @@ class DoctorAppointmentController extends Controller
     #*****************************************************************************
     #Index Page
     #*****************************************************************************
-    public function index()
+    public function index(Request $request)
     {
-        $result = Doctor::get()->where('active', 1);
-        return view('index')->with(array('result'=>$result));
+        $doctors = Doctor::get()->where('active', 1);
+
+        $data = DB::table('doctors')
+                    ->select('doctors.*')
+                    ->where('doctors.active', 1);
+
+        // $data = DB::table('doctors')
+        //             ->select('doctors.*', 'time_availability.*')
+        //             ->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
+        //             ->where('doctors.active', 1)
+        //             ->groupBy('doctors.id');
+
+
+        // $data = DB::table('time_availability')
+        //             ->select('doctors.*', 'time_availability.*', 'time_availability.id')
+        //             ->join('doctors', 'time_availability.doctor_id', '=', 'doctors.id')
+        //             ->where('doctors.active', 1)
+        //             ->groupBy('time_availability.doctor_id');
+
+        if($request->doctor_id)
+        {
+            $data = $data->where('doctors.id', $request->doctor_id);
+        }
+        if($request->doctor_name)
+        {
+            $data = $data->where('doctors.name', 'LIKE', '%'.$request->doctor_name.'%');
+        }
+        // if($request->day)
+        // {
+        //     $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
+        //                  ->where('time_availability.day', $request->day)
+        //                  ->where('time_availability.open_status', 1);
+        // }
+
+        // if($request->start_time && $request->end_time)
+        // {
+        //     $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
+        //                  ->whereTime('time_availability.start_time', '>=', $request->start_time)
+        //                  ->whereTime('time_availability.end_time', '<=', $request->end_time)
+        //                  ->where('time_availability.open_status', 1);
+        // }
+
+        if($request->day || $request->start_time || $request->end_time)
+        {
+            $data = $data->leftjoin('time_availability', 'doctors.id', '=', 'time_availability.doctor_id')
+                    ->where('time_availability.open_status', 1)
+                    ->groupBy('doctors.id');
+
+            if($request->day)
+            {
+                $data = $data->where('time_availability.day', $request->day);
+                             
+            }
+            if($request->start_time && $request->end_time)
+            {
+                $data = $data->whereTime('time_availability.start_time', '>=', $request->start_time)
+                             ->whereTime('time_availability.end_time', '<=', $request->end_time);
+            }
+                         
+        }
+
+        $result = $data->get();
+
+        return view('index')->with(array('result'=>$result, 'doctors'=>$doctors));
     }
 
     #*****************************************************************************
@@ -106,7 +168,34 @@ class DoctorAppointmentController extends Controller
     #*****************************************************************************
     public function getDoctorAvailability($doctor_id)
     {
-        $result = TimeAvailability::get()->where('doctor_id', $doctor_id);
+        $result = array();
+        $data = DB::table('time_availability')
+                    ->select('time_availability.*', 'doctors.name')
+                    ->join('doctors', 'time_availability.doctor_id', '=', 'doctors.id')
+                    ->where('doctor_id', $doctor_id)
+                    ->get();
+
+        foreach ($data as $key => $r) 
+        {
+            $days = $r->day;
+
+            switch ($days) 
+            {
+                case "1": $day = "Monday"; break;
+                case "2": $day = "Tuesday"; break;
+                case "3": $day = "Wednesday"; break;
+                case "4": $day = "Thursday"; break;
+                case "5": $day = "Friday"; break;
+                case "6": $day = "Saturday"; break;
+                case "7": $day = "Sunday"; break;
+                default: $day = "";
+            }
+
+            $result[$key]['day'] = $day;
+            $result[$key]['start_time'] = $r->start_time;
+            $result[$key]['end_time'] = $r->end_time;
+            $result[$key]['open_status'] = ($r->open_status == 0 ? 'No' : 'Yes');
+        }
         return Response::json(array('success' => true, 'data' => $result)); 
     }
 
